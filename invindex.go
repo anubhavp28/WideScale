@@ -2,25 +2,30 @@ package main
 
 import (
 	"bufio"
-	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 )
 
 type Document struct {
-	filename string
-	filepath string
+	FileName string `json:"file_name"`
+	Filepath string `json:"file_path"`
 }
 
+// InvertedIndex data structure mapping from tokens(words) to documents.
 var InvertedIndex map[string][]int
+
+// Documents is a splice containg information about of all the documents.
 var Documents []Document
+
+// DocIndexed stores count of total documents indexed.
 var DocIndexed int
 
 /*
 CreateIndex : creates the index :P.
 */
 func CreateIndex(pathtodir string) error {
-	fmt.Println("Building the inverted index.")
+	log.Println("Building the inverted index.")
 	InvertedIndex = make(map[string][]int)
 	dirf, err := os.Open(pathtodir)
 	if err != nil {
@@ -31,7 +36,7 @@ func CreateIndex(pathtodir string) error {
 		return err
 	}
 	if len(files) <= 0 {
-		fmt.Println("Empty dataset provided, building a empty index.")
+		log.Println("Empty dataset provided, building a empty index.")
 		return nil
 	}
 	for _, file := range files {
@@ -43,7 +48,7 @@ func CreateIndex(pathtodir string) error {
 			}
 		}
 	}
-
+	log.Println("Built an index of", DocIndexed, "documents.")
 	return nil
 }
 
@@ -53,20 +58,19 @@ func indexFile(fipath string) error {
 		return err
 	}
 	DocIndexed++
-	Documents = append(Documents, Document{file.Name(), fipath})
+	Documents = append(Documents, Document{filepath.Base(fipath), fipath})
 	fileScanner := bufio.NewScanner(file)
 	fileScanner.Split(bufio.ScanWords)
 wordLoop:
 	for fileScanner.Scan() {
 		word := Normalize(fileScanner.Text())
-		fmt.Println(word)
 		pl := InvertedIndex[word]
 		for _, docIndex := range pl {
-			if docIndex == DocIndexed {
+			if docIndex == DocIndexed-1 {
 				continue wordLoop
 			}
 		}
-		InvertedIndex[word] = append(pl, DocIndexed)
+		InvertedIndex[word] = append(pl, DocIndexed-1)
 	}
 	return nil
 }
