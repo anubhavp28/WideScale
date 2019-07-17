@@ -26,11 +26,11 @@ I really didn't think I could do a better explanation than that.
 * Install golang ([Instructions](https://golang.org/doc/install)). Add `go` installation path to your PATH environment variable.
 * Download [mux](https://github.com/gorilla/mux).
   ```
-  > go get https://github.com/gorilla/mux
+  > go get github.com/gorilla/mux
   ```
 * Downlaod widescale
   ```
-  > go get https://github.com/anubhavp28/WideScale/
+  > go get github.com/anubhavp28/WideScale/
   ```
 * Install widescale  
   ```
@@ -43,7 +43,13 @@ I really didn't think I could do a better explanation than that.
   > cd $(go env GOPATH)/bin
   > ./widescale
   ```
-  
+
+## Usage
+* To start the server, simply run:
+  ```
+  widescale <path-to-dir-containing-txt-files-to-index>
+  ```
+
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details.
   

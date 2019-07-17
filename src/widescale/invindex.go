@@ -33,6 +33,7 @@ func CreateIndex(pathtodir string) error {
 	}
 	files, err := dirf.Readdir(-1)
 	if err != nil {
+		log.Println("An error occured while reading the directory.")
 		return err
 	}
 	if len(files) <= 0 {
@@ -44,6 +45,7 @@ func CreateIndex(pathtodir string) error {
 			var fipath = filepath.Join(pathtodir, file.Name())
 			err := indexFile(fipath)
 			if err != nil {
+				log.Println("Unable to index", fipath, ".")
 				return err
 			}
 		}
@@ -52,6 +54,9 @@ func CreateIndex(pathtodir string) error {
 	return nil
 }
 
+/*
+Fetches the file and adds its words to the inverted index.
+*/
 func indexFile(fipath string) error {
 	file, err := os.Open(fipath)
 	if err != nil {
