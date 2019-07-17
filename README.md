@@ -35,19 +35,14 @@ I really didn't think I could do a better explanation than that.
 * Install widescale  
   ```
   > go install github.com/anubhavp28/WideScale/
-
-  ```
-* Run widescale 
-
-  ```
-  > cd $(go env GOPATH)/bin
-  > ./widescale
   ```
 
 ## Usage
 * To start the server, simply run:
+
   ```
-  widescale <path-to-dir-containing-txt-files-to-index>
+  > cd $(go env GOPATH)/bin
+  > widescale <path-to-dir-containing-txt-files-to-index>
   ```
 
 ## License
